@@ -27,7 +27,7 @@ pip install instaloader requests
 
 ### Step 1: Prepare Your Links
 
-Create a file named `reels.txt` and list each Instagram Reel link on a separate line.
+Create a file named `links_to_download.txt` and list each Instagram Reel link on a separate line.
 
 Example:
 
@@ -46,8 +46,8 @@ python insta_reel_bulk_download.py
 
 ### What the script does:
 
-- Checks for the existence of `queue.txt`. If it doesn't exist or is empty, the script copies links from `reels.txt` to `queue.txt`.
-- Downloads each video listed in `queue.txt` into a folder called `Downloads/`.
+- Checks for the existence of `queue.log`. If it doesn't exist or is empty, the script copies links from `links_to_download.txt` to `queue.log`.
+- Downloads each video listed in `queue.log` into a folder called `Downloads/`.
 - Removes successfully downloaded links from the queue to avoid duplicate processing.
 - Clearly reports invalid or skipped links in the console.
 - Introduces random pauses between downloads to mitigate IP blocking.
@@ -57,10 +57,10 @@ python insta_reel_bulk_download.py
 ```
 project-folder/
 ├── Downloads/                 # Folder where videos will be saved
-├── reels.txt                   # Source file containing Instagram Reel URLs
-├── queue.txt                   # Temporary queue file managed automatically
+├── links_to_download.txt      # Source file containing Instagram Reel URLs
+├── queue.log                  # Temporary queue file managed automatically
 ├── insta_reel_bulk_download.py # Main Python script
-├── README.md                   # Project documentation
+├── README.md                  # Project documentation
 ```
 
 ## Notes
