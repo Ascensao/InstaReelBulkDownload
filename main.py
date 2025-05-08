@@ -10,19 +10,19 @@ import shutil
 download_dir = "Downloads"
 os.makedirs(download_dir, exist_ok=True)
 
-queue_file = "queue.txt"
-source_file = "reels.txt"
+queue_file = "queue.log"
+source_file = "links_to_download.txt"
 
-# Copy reels.txt to queue.txt if queue.txt doesn't exist or is empty
+# Copy links_to_download.txt to queue.log if queue.log doesn't exist or is empty
 if not os.path.exists(queue_file) or os.path.getsize(queue_file) == 0:
     shutil.copyfile(source_file, queue_file)
-    print("Copied reels.txt to queue.txt for processing.")
+    print("Copied links_to_download.txt to queue.log for processing.")
 
 # Function to validate Instagram reel links
 def is_valid_instagram_reel(link):
     return link.startswith("https://www.instagram.com/reel/")
 
-# Load and filter URLs from queue.txt
+# Load and filter URLs from queue.log
 def load_urls_from_file(file_path):
     valid_urls = []
     invalid_urls = []
