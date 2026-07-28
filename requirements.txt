@@ -1,0 +1,5 @@
+# 4.15.3 fixes the GraphQL query id; older versions get "execution error" back
+# from Instagram and cannot fetch any post.
+instaloader>=4.15.3
+requests
+browser_cookie3

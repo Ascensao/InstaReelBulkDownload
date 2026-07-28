@@ -1,0 +1,19 @@
+# Downloaded videos
+Downloads/
+
+# Runtime data: logs, history, queue, failed list, saved session
+Core/
+
+# Belt and braces: an Instagram session must never be committed, wherever it
+# ends up if the Core folder is ever moved or renamed.
+session
+session-*
+session.json
+login-profile/
+
+# User link lists (dropped into Links/ and consumed at runtime)
+Links/*.txt
+
+# Python
+__pycache__/
+*.pyc
