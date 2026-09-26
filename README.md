@@ -13,8 +13,8 @@ carousels in bulk.
 ## Features
 
 - Drop **several `.txt` files** with links into the `Links/` folder — the script
-  automatically extracts the Instagram Reel links and **ignores any notes or
-  annotations** mixed in with them.
+  automatically extracts the Instagram links (`/reel/`, `/p/`, `/tv/`) and keeps
+  the notes you wrote around them.
 - **Reels, photos and carousels.** A reel is saved as `<shortcode>.mp4`, a photo
   as `<shortcode>.jpg`, and a carousel as `<shortcode>_01.jpg`,
   `<shortcode>_02.mp4`, ... — all in `Downloads/`. A carousel only lands once
@@ -35,10 +35,10 @@ carousels in bulk.
   stored in `Core/` and reused automatically from then on.
 - **Stops early when Instagram blocks you** (after 3 refusals in a row) instead
   of burning through the whole queue, and says clearly what happened.
-- Keeps a **JSON history** (`Core/history.json`) with the link, date/time and
-  whether each download succeeded.
+- Keeps a **JSON history** (`Core/history.json`) with the link, date/time,
+  whether each download succeeded, the files saved and the note.
 - Writes a full run **log** to `Core/app.log`.
-- Random pauses and an extended break every 20 videos to reduce the chance of
+- Random pauses and an extended break every 20 downloads to reduce the chance of
   being rate-limited by Instagram.
 - **`run.bat`** launcher — just double-click, no need to open a console.
 
@@ -58,16 +58,24 @@ pip install -r requirements.txt
 ### Step 1: Add your links
 
 Put one or more `.txt` files inside the **`Links/`** folder. Each file can
-contain plain links, one per line, and you may freely add notes around them —
-only the Instagram Reel links are picked up. Example file:
+contain plain links, one per line, and you may freely add notes around them.
+Reels, photos and carousels are all accepted. Example file:
 
 ```
 Workout ideas:
 https://www.instagram.com/reel/ABC123/
 
 Recipe to try later
-https://www.instagram.com/reel/XYZ789/?igsh=abcdef
+https://www.instagram.com/p/XYZ789/?igsh=abcdef
+
+https://www.instagram.com/p/QRS456/ beach photos
 ```
+
+**How notes work:** every line of text above a link — since the previous link —
+is that link's note, and so is any text on the same line as the link. In the
+example above, `ABC123` gets *Workout ideas*, `XYZ789` gets *Recipe to try
+later* and `QRS456` gets *beach photos*. Blank lines don't matter. Text after
+the last link belongs to no link.
 
 ### Step 2: Run it
 
@@ -103,7 +111,7 @@ and the `Core/session-*` file.
 
 ### What the script does
 
-1. Reads every `.txt` file in `Links/` and extracts the reel links.
+1. Reads every `.txt` file in `Links/` and extracts the links and their notes.
 2. Skips anything already downloaded (checked against `Downloads/` and the
    history).
 3. Signs in (saved session, browser cookies, or username/password).
@@ -114,6 +122,17 @@ and the `Core/session-*` file.
    is left in them.
 7. Lists everything still waiting in `Core/failed_downloads.txt` (rebuilt from
    the full history, so earlier failures are never overwritten).
+
+### At the end of a run
+
+The console shows:
+
+- a **summary** — how many were downloaded, failed, already there and still
+  pending, split into videos, photos and carousels;
+- a **Notes table** — each note next to the file(s) it was saved as, or marked
+  *failed* / *already had*;
+- a **Failed table** with the reason for every link that did not download;
+- which `.txt` files were finished and removed, and which were kept.
 
 ### If Instagram blocks you
 
@@ -128,7 +147,7 @@ After 3 refusals in a row the run stops and tells you why:
 ```
 project-folder/
 ├── Links/                  # Drop your .txt link lists here (consumed on run)
-├── Downloads/              # Folder where videos are saved
+├── Downloads/              # Where videos, photos and carousels are saved
 ├── Core/                   # Generated at runtime (git-ignored):
 │   ├── app.log             #   run log
 │   ├── history.json        #   link + datetime + success for every attempt
@@ -144,7 +163,7 @@ project-folder/
 
 ## Notes
 
-- Ensure the Instagram Reel links are **public**.
+- Ensure the Instagram posts are **public** (or visible to the signed-in account).
 - Be responsible: excessive or aggressive scraping may result in IP blocking —
   or in the signed-in account being flagged. Prefer the browser-session option,
   and keep the batches small.
