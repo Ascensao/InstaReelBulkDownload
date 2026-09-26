@@ -3,8 +3,8 @@
 ![logo_inta_resized](https://github.com/user-attachments/assets/fb17df3b-1d98-44a2-8248-39ae4c789452)
 
 
-A Python script designed to easily download multiple Instagram Reels videos in
-bulk.
+A Python script designed to easily download Instagram Reels, photos and
+carousels in bulk.
 
 > **Instagram now requires a signed-in session.** Anonymous requests are
 > answered with `403 Forbidden`, so the script asks you to sign in on the first
@@ -15,6 +15,15 @@ bulk.
 - Drop **several `.txt` files** with links into the `Links/` folder — the script
   automatically extracts the Instagram Reel links and **ignores any notes or
   annotations** mixed in with them.
+- **Reels, photos and carousels.** A reel is saved as `<shortcode>.mp4`, a photo
+  as `<shortcode>.jpg`, and a carousel as `<shortcode>_01.jpg`,
+  `<shortcode>_02.mp4`, ... — all in `Downloads/`. A carousel only lands once
+  every slide is in, so a half-finished one is never mistaken for done.
+- **Notes follow their link.** The text written above a link (or next to it on
+  the same line) becomes its note. At the end a table lists every note next to
+  the file it was saved as, and the note is kept in `Core/history.json`.
+- **Colourful console** with a progress bar for the whole run, a live bar for
+  each file, and a final summary of what was downloaded, failed or is pending.
 - **No duplicate downloads:** anything already in `Downloads/` (including
   sub-folders you organised yourself) or already recorded as successful in the
   history is skipped.
@@ -98,10 +107,11 @@ and the `Core/session-*` file.
 2. Skips anything already downloaded (checked against `Downloads/` and the
    history).
 3. Signs in (saved session, browser cookies, or username/password).
-4. Downloads the rest into `Downloads/` as `<shortcode>.mp4`.
-5. Records every attempt in `Core/history.json`.
-6. **Removes the downloaded links from each `.txt` file**, keeping the ones that
-   are still pending. Files are deleted only once no link is left in them.
+4. Downloads the rest into `Downloads/` (videos, photos and carousels).
+5. Records every attempt in `Core/history.json`, with its note and file names.
+6. **Removes the downloaded links — and their notes — from each `.txt` file**,
+   keeping the ones that are still pending. Files are deleted only once no link
+   is left in them.
 7. Lists everything still waiting in `Core/failed_downloads.txt` (rebuilt from
    the full history, so earlier failures are never overwritten).
 

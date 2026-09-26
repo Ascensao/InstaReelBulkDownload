@@ -2,4 +2,6 @@
 # from Instagram and cannot fetch any post.
 instaloader>=4.15.3
 requests
+# Coloured console layout and progress bars.
+rich
 browser_cookie3

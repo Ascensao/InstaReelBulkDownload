@@ -6,6 +6,8 @@ REM  (No need to open a console manually.)
 REM ===================================================================
 cd /d "%~dp0"
 title InstaReelBulkDownload
+REM UTF-8 so the progress bars and symbols render correctly.
+chcp 65001 >nul
 
 echo Checking Python...
 python --version >nul 2>&1
@@ -20,11 +22,11 @@ if errorlevel 1 (
 )
 
 echo Checking required libraries...
-python -c "import instaloader, requests" >nul 2>&1
+python -c "import instaloader, requests, rich" >nul 2>&1
 if errorlevel 1 (
-    echo Installing required libraries ^(instaloader, requests^)...
+    echo Installing required libraries ^(instaloader, requests, rich^)...
     python -m pip install --upgrade pip >nul 2>&1
-    python -m pip install "instaloader>=4.15.3" requests
+    python -m pip install "instaloader>=4.15.3" requests rich
 )
 
 REM Instagram rotates the query ids instaloader relies on, so an outdated
