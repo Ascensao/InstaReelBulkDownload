@@ -17,3 +17,12 @@ Links/*.txt
 # Python
 __pycache__/
 *.pyc
+
+# Local tooling / editor settings
+.claude/
+settings.local.json
+
+# Personal side project (private data, never public)
+pipeline_joao.py
+it_is_joao_*.json
+Transcripts_it_is_joao/
